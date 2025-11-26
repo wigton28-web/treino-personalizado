@@ -131,19 +131,19 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Check-in CTA (Main Action) */}
+        {/* Choose Plan CTA (Main Action) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
           className="mb-8"
         >
-          <Link href="/workout/checkin">
+          <Link href="/pricing">
             <button className="w-full group relative overflow-hidden bg-[#10B981] hover:bg-[#059669] text-white rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] shadow-2xl">
               <div className="flex items-center justify-between">
                 <div className="text-left">
-                  <div className="text-2xl font-bold mb-2">Área de Check-in</div>
-                  <div className="text-white/90">Iniciar treino de hoje • Peito e Tríceps</div>
+                  <div className="text-2xl font-bold mb-2">Escolha seu plano</div>
+                  <div className="text-white/90">Desbloqueie todo o potencial do MetaFlow</div>
                 </div>
                 <Play className="w-12 h-12 group-hover:scale-110 transition-transform" />
               </div>

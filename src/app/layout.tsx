@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { UserProvider } from "@/contexts/UserContext";
+import { ClientProviders } from "@/components/ClientProviders";
 
 export const metadata: Metadata = {
   title: "MetaFlow - Treino Fitness Personalizado",
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="font-sans antialiased">
-        <UserProvider>{children}</UserProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

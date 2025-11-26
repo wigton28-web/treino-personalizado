@@ -17,20 +17,29 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [onboardingData, setOnboardingData] = useState<OnboardingData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Load user data from localStorage
     const loadUserData = () => {
       try {
-        const storedOnboarding = localStorage.getItem("metaflow_onboarding");
-        const storedUser = localStorage.getItem("metaflow_user");
+        if (typeof window !== "undefined") {
+          const storedOnboarding = localStorage.getItem("metaflow_onboarding");
+          const storedUser = localStorage.getItem("metaflow_user");
 
-        if (storedOnboarding) {
-          setOnboardingData(JSON.parse(storedOnboarding));
-        }
+          if (storedOnboarding) {
+            setOnboardingData(JSON.parse(storedOnboarding));
+          }
 
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+          }
         }
       } catch (error) {
         console.error("Error loading user data:", error);
@@ -40,20 +49,24 @@ export function UserProvider({ children }: { children: ReactNode }) {
     };
 
     loadUserData();
-  }, []);
+  }, [mounted]);
 
   const updateOnboarding = (data: Partial<OnboardingData>) => {
     const updated = { ...onboardingData, ...data } as OnboardingData;
     setOnboardingData(updated);
-    localStorage.setItem("metaflow_onboarding", JSON.stringify(updated));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("metaflow_onboarding", JSON.stringify(updated));
+    }
   };
 
   const updateUser = (userData: UserProfile | null) => {
     setUser(userData);
-    if (userData) {
-      localStorage.setItem("metaflow_user", JSON.stringify(userData));
-    } else {
-      localStorage.removeItem("metaflow_user");
+    if (typeof window !== "undefined") {
+      if (userData) {
+        localStorage.setItem("metaflow_user", JSON.stringify(userData));
+      } else {
+        localStorage.removeItem("metaflow_user");
+      }
     }
   };
 
